@@ -1,23 +1,67 @@
+---
+import '../styles/global.css';
+import favicon from '../assets/hokke.jpeg';
+
+const {
+	title = 'Nexiary',
+	description = 'Nexiary は、プログラミング言語や AI、ツールを扱う情報サイトです。',
+} = Astro.props;
+
+const navItems = [
+	{ href: '/', label: 'Home' },
+	{ href: '/article', label: 'Article' },
+	{ href: '/about', label: 'About' },
+	{ href: '/policy', label: 'Policy' },
+	{ href: '/about#contact', label: 'Contact' },
+];
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#0f172a" />
+		<title>{title}</title>
+		<link rel="icon" href={favicon?.src ?? favicon} />
 	</head>
 	<body>
-		<slot />
+		<header class="site-header">
+			<div class="site-header-inner">
+				<a class="site-brand" href="/" aria-label="Nexiary home">
+					<span class="site-brand-mark">N</span>
+					<span>
+						<strong>Nexiary</strong>
+						<small>Knowledge Feed</small>
+					</span>
+				</a>
+
+				<nav class="site-nav" aria-label="主要ナビゲーション">
+					{navItems.map((item) => (
+						<a href={item.href}>{item.label}</a>
+					))}
+				</nav>
+			</div>
+		</header>
+
+		<main class="site-main">
+			<slot />
+		</main>
+
+		<footer class="site-footer">
+			<div class="site-footer-inner">
+				<div>
+					<p class="eyebrow">Additional Links</p>
+					<div class="footer-links">
+						{navItems.map((item) => (
+							<a href={item.href}>{item.label}</a>
+						))}
+					</div>
+				</div>
+				<p class="site-footer-note">© 2026 Nexiary</p>
+			</div>
+		</footer>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

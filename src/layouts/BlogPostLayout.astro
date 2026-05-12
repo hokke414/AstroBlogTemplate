@@ -1,0 +1,127 @@
+---
+import Layout from './Layout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getImage } from 'astro:assets';
+import noimg from '../assets/thumbnail/noimg.png';
+import {
+	collectArticles,
+	normalizeTags,
+	pickRelatedArticles,
+	type ArticleFrontmatter,
+} from '../utils/articles';
+
+interface Props {
+	frontmatter: ArticleFrontmatter;
+}
+
+const { frontmatter } = Astro.props;
+
+const thumbModules = import.meta.glob('../assets/thumbnail/*.{png,jpg,jpeg,webp,avif}', {
+	eager: true,
+	import: 'default',
+}) as Record<string, any>;
+
+const resolveThumb = (img: string | undefined) => {
+	if (!img) {
+		return noimg;
+	}
+
+	const normalized = img.replace(/^\/+/, '').replace(/^src\//, '');
+	const directKey = `../${normalized}`;
+
+	if (thumbModules[directKey]) {
+		return thumbModules[directKey];
+	}
+
+	const fileName = normalized.split('/').pop();
+	const byName = Object.entries(thumbModules).find(([key]) => key.endsWith(`/${fileName}`));
+
+	return byName ? byName[1] : noimg;
+};
+
+const articleThumb = await getImage({
+	src: resolveThumb(frontmatter.img),
+	width: 680,
+	height: 420,
+	format: 'webp',
+});
+
+const normalizedFrontmatterTags = normalizeTags(frontmatter.tags);
+
+const formattedPubDate = new Intl.DateTimeFormat('ja-JP', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+}).format(new Date(frontmatter.pubDate));
+
+const currentSlug = Astro.url.pathname.replace(/\/+$/, '').split('/').at(-1) ?? '';
+
+const articleModules = import.meta.glob('../pages/article/*.md', { eager: true }) as Record<
+	string,
+	{ frontmatter: ArticleFrontmatter }
+>;
+
+const relatedArticles = pickRelatedArticles(collectArticles(articleModules), currentSlug, 3);
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description}>
+	<div class="article-container">
+		<a href="/article" class="article-back">← 記事一覧に戻る</a>
+
+		<article class="article-header">
+			<div class="article-header-main">
+				<div>
+					<div class="article-meta">
+						<span class="category">ブログ</span>
+						<time datetime={frontmatter.pubDate}>{formattedPubDate}</time>
+						<span>著者: {frontmatter.author}</span>
+					</div>
+					<h1 class="article-title">{frontmatter.title}</h1>
+					<p class="article-description">{frontmatter.description}</p>
+				</div>
+			</div>
+			<img
+				src={articleThumb.src}
+				alt={frontmatter.title}
+				class="article-hero-thumb"
+				width={680}
+				height={420}
+				loading="eager"
+				decoding="async"
+			/>
+			{normalizedFrontmatterTags.length > 0 && (
+				<div class="article-tags">
+					<div class="article-tag-list" aria-label="タグ">
+						{normalizedFrontmatterTags.map((tag) => <span class="article-tag-pill">{tag}</span>)}
+					</div>
+				</div>
+			)}
+		</article>
+
+		<div class="article-content">
+			<slot />
+		</div>
+
+		{relatedArticles.length > 0 && (
+			<section class="section recommended-section">
+				<div class="section-head">
+					<p class="eyebrow">Recommended</p>
+					<h2>おすすめ記事</h2>
+					<p>いま読んだ記事の近くにある、関連しそうな記事を3件表示しています。</p>
+				</div>
+
+				<div class="post-grid recommended-grid">
+					{relatedArticles.map((article) => (
+						<ArticleCard
+							title={article.title}
+							date={article.pubDate}
+							description={article.description}
+							slug={article.slug}
+							tags={article.tags}
+						/>
+					))}
+				</div>
+			</section>
+		)}
+	</div>
+</Layout>

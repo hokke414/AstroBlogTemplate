@@ -1,11 +1,129 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { collectArticles, uniqueTags } from '../utils/articles';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+type ArticleFrontmatter = {
+	title: string;
+	description: string;
+	pubDate: string;
+	tags?: string[] | string;
+};
+
+const modules = import.meta.glob('./article/*.md', { eager: true }) as Record<
+	string,
+	{ frontmatter: ArticleFrontmatter }
+>;
+
+const allArticles = collectArticles(modules);
+const latestArticles = allArticles.slice(0, 6);
+
+const articleCount = allArticles.length;
+const tagCount = uniqueTags(allArticles).length;
+
+const featureCards = [
+	{
+		title: 'Article',
+		description: '記事の一覧ページ。タグ検索とキーワード検索に対応しています。',
+		href: '/article',
+		label: '開く',
+	},
+	{
+		title: 'About',
+		description: '運営者情報、更新方針やポリシーをまとめたページ。連絡先もここから確認できます。',
+		href: '/about',
+		label: '開く',
+	},
+	{
+		title: 'Contact',
+		description: 'お問い合わせは About ページの連絡先セクションからご案内します。',
+		href: '/about#contact',
+		label: '開く',
+	},
+	{
+		title: 'Policy',
+		description: 'プライバシーポリシーに関する情報をまとめたページです。',
+		href: '/policy',
+		label: '開く',
+	},
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Nexiary | Knowledge Feed" description="Nexiary は、プログラミング言語や AI、ツールを扱う情報サイトです。">
+	<div class="shell">
+		<section class="hero">
+			<div class="hero-copy">
+				<p class="eyebrow">Home / TECH NOTES</p>
+				<h1>Nexiary</h1>
+				<p class="lead">
+					プログラミング言語や AI、ツールを中心に、運営者の備忘録やお知らせをまとめた情報サイトです。
+				</p>
+				<div class="actions">
+					<a class="button primary" href="/article">Article</a>
+					<a class="button ghost" href="/about">About</a>
+				</div>
+			</div>
+
+			<aside class="hero-card" aria-label="サイト概要">
+				<p class="card-kicker">Welcome to Nexiary</p>
+				<p>
+					記事は Markdown 形式で追加されています。
+				</p>
+				<div class="stats">
+					<div>
+						<strong>{articleCount}</strong>
+						<span>公開記事</span>
+					</div>
+					<div>
+						<strong>{tagCount}</strong>
+						<span>タグ数</span>
+					</div>
+					<div>
+						<strong>{latestArticles.length}</strong>
+						<span>新着表示</span>
+					</div>
+				</div>
+			</aside>
+		</section>
+
+		<section class="section">
+			<div class="section-head">
+				<p class="eyebrow">Pages</p>
+				<h2>Visit Our Pages</h2>
+				<p>このページは大きく4つのセクションに分かれているのでご覧ください。</p>
+			</div>
+
+			<div class="page-grid">
+				{featureCards.map((page) => (
+					<article class="page-card">
+						<p class="page-title">{page.title}</p>
+						<p>{page.description}</p>
+						<a href={page.href}>{page.label}</a>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="section">
+			<div class="section-head split">
+				<div>
+					<p class="eyebrow">Latest Posts</p>
+					<h2>Latest Articles</h2>
+				</div>
+				<a class="button ghost" href="/article">もっと見る</a>
+			</div>
+
+			<div class="post-grid article-grid">
+				{latestArticles.map((article) => (
+					<ArticleCard
+						title={article.title}
+						date={article.pubDate}
+						description={article.description}
+						slug={article.slug}
+						tags={article.tags}
+					/>
+				))}
+			</div>
+		</section>
+	</div>
 </Layout>

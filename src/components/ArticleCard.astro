@@ -1,0 +1,46 @@
+---
+import { getImage } from 'astro:assets';
+import noimg from '../assets/thumbnail/noimg.png';
+
+interface Props {
+	title: string;
+	date: string;
+	description: string;
+	slug: string;
+	tags?: string[];
+}
+
+const { title, date, description, slug, tags = [] } = Astro.props;
+
+const optimizedImage = await getImage({ src: noimg, width: 560, height: 320, format: 'webp' });
+
+const formattedDate = new Intl.DateTimeFormat('ja-JP', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+}).format(new Date(date));
+
+const searchableText = [title, description, ...tags].join(' ');
+---
+
+<a href={`/article/${slug}`} class="post-card" data-search={searchableText} data-tags={tags.join('||')}>
+	<img
+		src={optimizedImage.src}
+		alt={title}
+		class="post-card-image"
+		width={640}
+		height={360}
+		loading="lazy"
+		decoding="async"
+	/>
+	<div class="post-card-body">
+		<p class="post-meta"><time datetime={date}>{formattedDate}</time></p>
+		<h3>{title}</h3>
+		<p class="post-excerpt">{description}</p>
+		{tags.length > 0 && (
+			<div class="article-card-tags" aria-label="タグ">
+				{tags.map((tag) => <span class="article-tag">{tag}</span>)}
+			</div>
+		)}
+	</div>
+</a>

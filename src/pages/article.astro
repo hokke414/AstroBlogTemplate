@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import articleFilterScriptUrl from '../scripts/article-filter.ts?url';
+import { collectArticles, uniqueTags } from '../utils/articles';
+
+type ArticleFrontmatter = {
+	title: string;
+	description: string;
+	pubDate: string;
+	author: string;
+	tags?: string[] | string;
+	img?: string;
+};
+
+const PAGE_SIZE = 12;
+
+const modules = import.meta.glob('./article/*.md', { eager: true }) as Record<
+	string,
+	{ frontmatter: ArticleFrontmatter }
+>;
+
+const articles = collectArticles(modules);
+
+const totalPages = Math.max(1, Math.ceil(articles.length / PAGE_SIZE));
+const currentPage = 1;
+const pageArticles = articles.slice(0, PAGE_SIZE);
+const tags = uniqueTags(articles);
+
+const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page/${page}`);
+---
+
+<Layout title="Article | Nexiary" description="Nexiary の記事一覧。タグ検索とキーワード検索に対応しています。">
+	<div class="shell">
+		<section class="section">
+			<div class="section-head">
+				<p class="eyebrow">All Article</p>
+				<h1>Articles</h1>
+				<p>
+					タグ検索とキーワード検索で目的の記事を探せます。
+				</p>
+			</div>
+
+			<div class="search-panel">
+				<div class="search-row">
+					<input class="search-input" type="search" placeholder="キーワードで検索" aria-label="キーワードで検索" data-search-input />
+					<button class="button primary" type="button" data-clear-search>クリア</button>
+				</div>
+
+				<div class="filter-bar" aria-label="タグ検索">
+					{tags.map((tag) => (
+						<button class="tag-filter" type="button" data-tag={tag} aria-pressed="false">
+							{tag}
+						</button>
+					))}
+				</div>
+
+				<p class="results-summary"><span data-result-count>{pageArticles.length}</span>件表示中</p>
+			</div>
+
+			<div class="post-grid article-grid" data-article-grid>
+				{pageArticles.map((article) => (
+					<ArticleCard
+						title={article.title}
+						date={article.pubDate}
+						description={article.description}
+						slug={article.slug}
+						tags={article.tags}
+					/>
+				))}
+			</div>
+
+			<p class="empty-state" data-empty-state hidden>条件に一致する記事がありません。</p>
+
+			{totalPages > 1 && (
+				<nav class="pagination" aria-label="記事一覧ページネーション">
+					{Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+						<a class:list={["page-link", page === currentPage && 'is-current']} href={makePagePath(page)}>
+							{page}
+						</a>
+					))}
+				</nav>
+			)}
+		</section>
+	</div>
+
+	<script type="module" src={articleFilterScriptUrl}></script>
+</Layout>
