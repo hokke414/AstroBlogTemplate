@@ -3,32 +3,49 @@ const btnPrev = document.querySelector('[data-stack-prev]');
 const btnNext = document.querySelector('[data-stack-next]');
 
 if (container) {
-	const scrollBy = () => container.clientWidth * 0.6;
-	btnPrev?.addEventListener('click', () => {
-		container.scrollBy({ left: -scrollBy(), behavior: 'smooth' });
-	});
-	btnNext?.addEventListener('click', () => {
-		container.scrollBy({ left: scrollBy(), behavior: 'smooth' });
+	// ホバーでアニメーション一時停止
+	container.addEventListener('mouseenter', () => {
+		container.classList.add('paused');
 	});
 
-	// optional auto-play on desktop
-	let autoplayId: number | undefined;
-	const startAuto = () => {
-		if (window.matchMedia('(min-width: 640px)').matches) {
-			autoplayId = window.setInterval(() => {
-				container.scrollBy({ left: scrollBy(), behavior: 'smooth' });
-			}, 4000);
+	container.addEventListener('mouseleave', () => {
+		container.classList.remove('paused');
+	});
+
+	// スクロール中のフラグ
+	let isScrolling = false;
+
+	// ボタンクリック時もアニメーション一時停止（スクロール可能）
+	const handleButtonClick = (direction: 'prev' | 'next') => {
+		if (isScrolling) return; // スクロール中は処理を無視
+		
+		isScrolling = true;
+		container.classList.add('paused');
+		
+		const cardWidth = 140;
+		const gap = 24;
+		const scrollDistance = cardWidth + gap;
+
+		if (direction === 'next') {
+			container.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+		} else {
+			container.scrollBy({ left: -scrollDistance, behavior: 'smooth' });
 		}
-	};
-	const stopAuto = () => {
-		if (autoplayId) {
-			clearInterval(autoplayId);
-			autoplayId = undefined;
-		}
+
+		// スクロール完了後にアニメーション再開
+		setTimeout(() => {
+			isScrolling = false;
+			// アニメーションをリセットして再スタート
+			container.classList.remove('paused');
+			// CSSアニメーションを強制的に再スタート
+			container.style.animation = 'none';
+			// リフローを強制
+			void container.offsetWidth;
+			// アニメーション再度適用
+			container.style.animation = '';
+		}, 700);
 	};
 
-	container.addEventListener('mouseenter', stopAuto);
-	container.addEventListener('mouseleave', startAuto);
-
-	startAuto();
+	btnPrev?.addEventListener('click', () => handleButtonClick('prev'));
+	btnNext?.addEventListener('click', () => handleButtonClick('next'));
 }

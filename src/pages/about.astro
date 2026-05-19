@@ -1,22 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import profile from '../assets/hokke.jpeg';
-import stackScriptUrl from '../scripts/stack-slider.ts?url';
-
-import HtmlLogo from '../assets/stacks/HtmlLogo.png?url';
-import CssLogo from '../assets/stacks/CssLogo.png?url';
-import JavascriptLogo from '../assets/stacks/JavascriptLogo.png?url';
-import GasLogo from '../assets/stacks/GasLogo.png?url';
-import GitLogo from '../assets/stacks/GitLogo.png?url';
-import GithubLogo from '../assets/stacks/GithubLogo.png?url';
-import UnityLogo from '../assets/stacks/UnityLogo.png?url';
-
-const stackImages = [HtmlLogo, CssLogo, JavascriptLogo, GasLogo, GitLogo, GithubLogo, UnityLogo];
-const stackCaptions = ['HTML', 'CSS', 'JavaScript', 'GAS', 'Git', 'GitHub', 'Unity'];
-const profileSrc = typeof profile === 'string' ? profile : profile?.src ?? profile?.default ?? '';
 ---
 
-<Layout title="About | Nexiary" description="Nexiary の運営者情報、活動方針、連絡先をまとめたページです。">
+<Layout title="About | Nexiary" description="Nexiary についての情報。プライバシーポリシー、更新頻度、記事テーマをまとめています。">
 	<div class="shell">
 		<section class="section">
 			<div class="section-head">
@@ -27,80 +13,38 @@ const profileSrc = typeof profile === 'string' ? profile : profile?.src ?? profi
 				</p>
 			</div>
 
-			<div class="profile-area">
-				<img src={profileSrc} alt="hokke" class="profile-avatar" width="140" height="140" />
-				<div>
-					<p class="page-title">私について</p>
-					<p>ほっけ（hokke414）。Web・GAS・Unity を中心に学習・制作をしています。</p>
-				</div>
-			</div>
-
-			<section class="section stacks-section">
-				<div class="section-head">
-					<p class="eyebrow">Stack</p>
-					<h2>使えるスタック</h2>
-					<p>主に扱っている技術スタックをスライドで紹介します。</p>
-				</div>
-
-				<div class="stack-wrap">
-					<button class="stack-btn" data-stack-prev aria-label="previous">◀</button>
-					<div class="stack-carousel" data-stack-carousel>
-						{stackImages.map((src, i) => (
-							<figure class="stack-item">
-								<img src={src} alt={stackCaptions[i] ?? 'stack'} />
-								<figcaption class="stack-caption">{stackCaptions[i]}</figcaption>
-							</figure>
-						))}
-					</div>
-					<button class="stack-btn" data-stack-next aria-label="next">▶</button>
-				</div>
-			</section>
-
 			<div class="page-grid">
 				<article class="page-card">
-					<p class="page-title">運営者について - hokke414</p>
+					<p class="page-title">このサイトについて</p>
 					<p>
-						大学生活の合間に、個人開発や実験的な制作を進めています。記事は自分の備忘録として残しつつ、同じように学ぶ人が読みやすい形を意識しています。
+						Web・GAS・Unity などの技術学習と、その過程で得た知見を記事として公開しています。
 					</p>
 				</article>
 
 				<article class="page-card">
-					<p class="page-title">得意分野</p>
+					<p class="page-title">記事テーマ</p>
 					<p>
-						Git / GitHub、Google Apps Script、Unity、Web 制作などを中心に扱っています。実装だけでなく、運用や公開まで含めて整理するのが方針です。
+						プログラミング、Web 開発、Google Apps Script、Unity、ツール制作、学習メモなど技術関連の内容を中心にしています。
 					</p>
 				</article>
 			</div>
 
 			<article class="page-card page-card-wide">
-				<p class="page-title">更新方針</p>
+				<p class="page-title">更新頻度</p>
 				<p>
-					MD ファイルの frontmatter に title / description / pubDate / tags を書くだけで記事一覧に反映されます。本文を書いて保存すれば、そのまま公開対象になります。
+					原則週1回の更新を目標としています。新しい記事や重要な更新はトップページや SNS でお知らせします。
 				</p>
 			</article>
 
-			<section class="section about-contact" id="contact">
-				<div class="section-head">
-					<p class="eyebrow">Contact</p>
-					<h2>連絡先</h2>
-					<p>記事の内容確認、修正依頼、制作の相談などはこちらからどうぞ。</p>
-				</div>
+			<article class="page-card page-card-wide">
+				<p class="page-title">プライバシーポリシーおよび免責事項</p>
+				<p>
+					このサイトでは、個人を特定できる情報を意図的に収集しておらず、意図した誤情報発信はいたしません。またお問い合わせの際にいただいた情報については、ご返答以外の目的では使用いたしません。<br>
+					プライバシーポリシーや免責事項、お問い合わせにつきましては、<a href="/policy" class="link">こちらのページ</a>をご覧ください。
+				</p>
+			</article>
 
-				<div class="page-grid">
-					<article class="page-card">
-						<p class="page-title">X / SNS</p>
-						<p>最新の更新案内や短いお知らせは X で共有する想定です。</p>
-						<a href="https://x.com/hokke414" target="_blank" rel="noreferrer">@hokke414</a>
-					</article>
-
-					<article class="page-card">
-						<p class="page-title">Mail</p>
-						<p>メールでの連絡先を載せる場合はここに差し込めます。</p>
-						<a href="mailto:hello@nexiary.com">hello@nexiary.com</a>
-					</article>
-				</div>
-			</section>
+		
 		</section>
 	</div>
-	<script type="module" src={stackScriptUrl}></script>
 </Layout>

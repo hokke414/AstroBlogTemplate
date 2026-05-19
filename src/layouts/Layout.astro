@@ -12,7 +12,7 @@ const navItems = [
 	{ href: '/article', label: 'Article' },
 	{ href: '/about', label: 'About' },
 	{ href: '/policy', label: 'Policy' },
-	{ href: '/about#contact', label: 'Contact' },
+	{ href: 'https://forms.gle/sW5eP28BkmsYY2Xw8', label: 'Contact' },
 ];
 ---
 
@@ -40,7 +40,13 @@ const navItems = [
 
 				<nav class="site-nav" aria-label="主要ナビゲーション">
 					{navItems.map((item) => (
-						<a href={item.href}>{item.label}</a>
+						<a
+							href={item.href}
+							target={item.href.startsWith('http') ? '_blank' : undefined}
+							rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+						>
+							{item.label}
+						</a>
 					))}
 				</nav>
 			</div>
@@ -56,7 +62,13 @@ const navItems = [
 					<p class="eyebrow">Additional Links</p>
 					<div class="footer-links">
 						{navItems.map((item) => (
-							<a href={item.href}>{item.label}</a>
+							<a
+								href={item.href}
+								target={item.href.startsWith('http') ? '_blank' : undefined}
+								rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+							>
+								{item.label}
+							</a>
 						))}
 					</div>
 				</div>

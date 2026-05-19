@@ -221,7 +221,6 @@ p {
 }
 
 h1 {
-	max-width: 12ch;
 	margin-bottom: 16px;
 	font-size: clamp(2.6rem, 5vw, 5.2rem);
 	line-height: 0.98;
@@ -250,7 +249,6 @@ h1 {
 
 .button,
 .filter-bar span,
-.page-card a,
 .read-more {
 	border-radius: 999px;
 }
@@ -405,7 +403,6 @@ h1 {
 	color: #0f172a;
 }
 
-.page-card a,
 .read-more {
 	display: inline-flex;
 	align-items: center;
@@ -413,6 +410,12 @@ h1 {
 	background: #e2e8f0;
 	font-weight: 700;
 	color: #0f172a;
+	border-radius: 999px;
+}
+
+.page-card a {
+	color: #7c3aed;
+	text-decoration: none;
 }
 
 .timeline {

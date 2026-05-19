@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Slide from '../components/slide.astro';
+import profile from '../assets/hokke.jpeg?url';
+---
+
+<Layout title="hokke414 | Nexiary" description="hokke414 のポートフォリオページ。プロフィール、スキル、プロジェクトをまとめています。">
+	<div class="shell">
+		<section class="section">
+			<div class="section-head">
+				<p class="eyebrow">Portfolio</p>
+				<h1>hokke414</h1>
+				<p>
+					プログラミング、Web 制作、個人開発を通じて学んだことをまとめています。
+				</p>
+			</div>
+
+			<div class="profile-area">
+				<img src={profile} alt="hokke" class="profile-avatar" width="140" height="140" />
+				<div>
+					<p class="page-title">ほっけ（hokke414）</p>
+					<p>Web・GAS・Unity を中心に学習・制作を行っています。</p>
+				</div>
+			</div>
+
+			<div class="page-grid">
+				<article class="page-card">
+					<p class="page-title">プロフィール</p>
+					<p>
+						大学生活の合間に、個人開発や実験的な制作を進めています。学習過程で得た知見は Nexiary で記事にして公開しています。
+					</p>
+				</article>
+
+				<article class="page-card">
+					<p class="page-title">スキル・経験</p>
+					<p>
+						Git / GitHub、Google Apps Script、Unity、Web 制作（HTML / CSS / JavaScript）など。実装だけでなく、運用や公開まで含めて整理することを心がけています。
+					</p>
+				</article>
+			</div>
+
+			<section class="section">
+				<div class="section-head">
+					<p class="eyebrow">Skills & Stacks</p>
+					<h2>使用技術</h2>
+					<p>これまで学習・制作に用いた技術スタックです。</p>
+				</div>
+
+				<Slide />
+			</section>
+
+			<section class="section">
+				<div class="section-head">
+					<p class="eyebrow">Projects</p>
+					<h2>プロジェクト</h2>
+					<p>これまでの制作物や学習プロジェクトをまとめています。</p>
+				</div>
+
+				<div class="page-grid">
+					<article class="page-card">
+						<p class="page-title">プロジェクト 1</p>
+						<p>
+							プロジェクトの説明がここに入ります。
+						</p>
+					</article>
+
+					<article class="page-card">
+						<p class="page-title">プロジェクト 2</p>
+						<p>
+							プロジェクトの説明がここに入ります。
+						</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="section about-contact" id="contact">
+				<div class="section-head">
+					<p class="eyebrow">Contact</p>
+					<h2>連絡先</h2>
+					<p>制作の相談やお問い合わせはこちらからどうぞ。</p>
+				</div>
+
+				<div class="page-grid">
+					<article class="page-card">
+						<p class="page-title">X / SNS</p>
+						<p>
+							<a href="https://x.com/hokke414" target="_blank" rel="noreferrer">@hokke414</a>
+						</p>
+					</article>
+
+					<article class="page-card">
+						<p class="page-title">Mail</p>
+						<p>
+							<a href="mailto:hello@nexiary.com">hello@nexiary.com</a>
+						</p>
+					</article>
+				</div>
+			</section>
+		</section>
+	</div>
+</Layout>
+
+<style>
+</style>
