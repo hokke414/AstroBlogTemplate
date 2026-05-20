@@ -3,30 +3,15 @@ import Layout from '../../../layouts/Layout.astro';
 import ArticleCard from '../../../components/ArticleCard.astro';
 import { collectArticles } from '../../../utils/articles';
 
-type ArticleFrontmatter = {
-	title: string;
-	description: string;
-	pubDate: string;
-	author: string;
-	tags?: string[] | string;
-	img?: string;
-};
-
 const PAGE_SIZE = 12;
 
-const modules = import.meta.glob('../*.md', { eager: true }) as Record<
-	string,
-	{ frontmatter: ArticleFrontmatter }
->;
-
-const allArticles = collectArticles(modules);
-
+const allArticles = await collectArticles();
 const totalPages = Math.max(1, Math.ceil(allArticles.length / PAGE_SIZE));
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+	const allArticles = await collectArticles();
 	const pageSize = 12;
-	const articleCount = Object.keys(import.meta.glob('../*.md')).length;
-	const pages = Math.max(1, Math.ceil(articleCount / pageSize));
+	const pages = Math.max(1, Math.ceil(allArticles.length / pageSize));
 
 	return Array.from({ length: Math.max(0, pages - 1) }, (_, index) => {
 		const page = index + 2;
@@ -59,12 +44,12 @@ const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page
 			<div class="post-grid article-grid">
 				{articles.map((article) => (
 					<ArticleCard
-						title={article.title}
-						date={article.pubDate}
-						description={article.description}
+						title={article.data.title}
+						date={article.data.pubDate}
+						description={article.data.description}
 						slug={article.slug}
 						tags={article.tags}
-						img={article.img}
+						img={article.data.img}
 					/>
 				))}
 			</div>

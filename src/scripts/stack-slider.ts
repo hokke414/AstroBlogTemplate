@@ -1,6 +1,6 @@
-const container = document.querySelector('[data-stack-carousel]');
-const btnPrev = document.querySelector('[data-stack-prev]');
-const btnNext = document.querySelector('[data-stack-next]');
+const container = document.querySelector('[data-stack-carousel]') as HTMLElement | null;
+const btnPrev = document.querySelector('[data-stack-prev]') as HTMLElement | null;
+const btnNext = document.querySelector('[data-stack-next]') as HTMLElement | null;
 
 if (container) {
 	// ホバーでアニメーション一時停止
@@ -37,12 +37,14 @@ if (container) {
 			isScrolling = false;
 			// アニメーションをリセットして再スタート
 			container.classList.remove('paused');
-			// CSSアニメーションを強制的に再スタート
-			container.style.animation = 'none';
-			// リフローを強制
-			void container.offsetWidth;
-			// アニメーション再度適用
-			container.style.animation = '';
+			if (container) {
+				// CSSアニメーションを強制的に再スタート
+				container.style.animation = 'none';
+				// リフローを強制
+				void container.offsetWidth;
+				// アニメーション再度適用
+				container.style.animation = '';
+			}
 		}, 700);
 	};
 

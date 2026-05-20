@@ -3,19 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { collectArticles, uniqueTags } from '../utils/articles';
 
-type ArticleFrontmatter = {
-	title: string;
-	description: string;
-	pubDate: string;
-	tags?: string[] | string;
-};
-
-const modules = import.meta.glob('./article/*.md', { eager: true }) as Record<
-	string,
-	{ frontmatter: ArticleFrontmatter }
->;
-
-const allArticles = collectArticles(modules);
+const allArticles = await collectArticles();
 const latestArticles = allArticles.slice(0, 6);
 
 const articleCount = allArticles.length;
@@ -114,12 +102,12 @@ const featureCards = [
 			<div class="post-grid article-grid">
 				{latestArticles.map((article) => (
 					<ArticleCard
-						title={article.title}
-						date={article.pubDate}
-						description={article.description}
+						title={article.data.title}
+						date={article.data.pubDate}
+						description={article.data.description}
 						slug={article.slug}
 						tags={article.tags}
-						img={article.img}
+						img={article.data.img}
 					/>
 				))}
 			</div>

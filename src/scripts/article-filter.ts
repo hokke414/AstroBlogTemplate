@@ -1,12 +1,12 @@
-const normalize = (value) => String(value ?? '').toLowerCase().normalize('NFKC').trim();
+const normalize = (value: unknown): string => String(value ?? '').toLowerCase().normalize('NFKC').trim();
 
-const searchInput = document.querySelector('[data-search-input]');
-const clearButton = document.querySelector('[data-clear-search]');
-const tagButtons = [...document.querySelectorAll('[data-tag]')];
-const cards = [...document.querySelectorAll('[data-search]')];
-const resultCount = document.querySelector('[data-result-count]');
-const emptyState = document.querySelector('[data-empty-state]');
-const activeTags = new Set();
+const searchInput = document.querySelector('[data-search-input]') as HTMLInputElement | null;
+const clearButton = document.querySelector('[data-clear-search]') as HTMLElement | null;
+const tagButtons = [...document.querySelectorAll('[data-tag]')] as HTMLElement[];
+const cards = [...document.querySelectorAll('[data-search]')] as HTMLElement[];
+const resultCount = document.querySelector('[data-result-count]') as HTMLElement | null;
+const emptyState = document.querySelector('[data-empty-state]') as HTMLElement | null;
+const activeTags = new Set<string>();
 
 const updateResults = () => {
 	const query = normalize(searchInput?.value);
@@ -35,7 +35,7 @@ const updateResults = () => {
 	}
 
 	if (emptyState) {
-		emptyState.hidden = visibleCount !== 0;
+		(emptyState as HTMLElement).hidden = visibleCount !== 0;
 	}
 };
 

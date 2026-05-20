@@ -3,16 +3,7 @@ import Layout from './Layout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getImage } from 'astro:assets';
 import noimg from '../assets/thumbnail/noimg.png';
-import {
-	collectArticles,
-	normalizeTags,
-	pickRelatedArticles,
-	type ArticleFrontmatter,
-} from '../utils/articles';
-
-interface Props {
-	frontmatter: ArticleFrontmatter;
-}
+import { collectArticles, pickRelatedArticles } from '../utils/articles';
 
 const { frontmatter } = Astro.props;
 
@@ -46,7 +37,11 @@ const articleThumb = await getImage({
 	format: 'webp',
 });
 
-const normalizedFrontmatterTags = normalizeTags(frontmatter.tags);
+const normalizedFrontmatterTags: string[] = Array.isArray(frontmatter.tags)
+	? frontmatter.tags
+	: typeof frontmatter.tags === 'string' && frontmatter.tags.trim()
+	? [frontmatter.tags.trim()]
+	: [];
 
 const formattedPubDate = new Intl.DateTimeFormat('ja-JP', {
 	year: 'numeric',
@@ -56,12 +51,8 @@ const formattedPubDate = new Intl.DateTimeFormat('ja-JP', {
 
 const currentSlug = Astro.url.pathname.replace(/\/+$/, '').split('/').at(-1) ?? '';
 
-const articleModules = import.meta.glob('../pages/article/*.md', { eager: true }) as Record<
-	string,
-	{ frontmatter: ArticleFrontmatter }
->;
-
-const relatedArticles = pickRelatedArticles(collectArticles(articleModules), currentSlug, 3);
+const allArticles = await collectArticles();
+const relatedArticles = pickRelatedArticles(allArticles, currentSlug, 3);
 ---
 
 <Layout title={frontmatter.title} description={frontmatter.description}>
@@ -92,7 +83,9 @@ const relatedArticles = pickRelatedArticles(collectArticles(articleModules), cur
 			{normalizedFrontmatterTags.length > 0 && (
 				<div class="article-tags">
 					<div class="article-tag-list" aria-label="Tags">
-						{normalizedFrontmatterTags.map((tag) => <span class="article-tag-pill">{tag}</span>)}
+						{normalizedFrontmatterTags.map((tag) => (
+							<span class="article-tag-pill">{tag}</span>
+						))}
 					</div>
 				</div>
 			)}
@@ -113,12 +106,12 @@ const relatedArticles = pickRelatedArticles(collectArticles(articleModules), cur
 				<div class="post-grid recommended-grid">
 					{relatedArticles.map((article) => (
 						<ArticleCard
-							title={article.title}
-							date={article.pubDate}
-							description={article.description}
+							title={article.data.title}
+							date={article.data.pubDate}
+							description={article.data.description}
 							slug={article.slug}
 							tags={article.tags}
-							img={article.img}
+							img={article.data.img}
 						/>
 					))}
 				</div>

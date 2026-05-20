@@ -3,23 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { collectArticles, uniqueTags } from '../utils/articles';
 
-type ArticleFrontmatter = {
-	title: string;
-	description: string;
-	pubDate: string;
-	author: string;
-	tags?: string[] | string;
-	img?: string;
-};
-
 const PAGE_SIZE = 12;
 
-const modules = import.meta.glob('./article/*.md', { eager: true }) as Record<
-	string,
-	{ frontmatter: ArticleFrontmatter }
->;
-
-const articles = collectArticles(modules);
+const articles = await collectArticles();
 
 const totalPages = Math.max(1, Math.ceil(articles.length / PAGE_SIZE));
 const currentPage = 1;
@@ -60,12 +46,12 @@ const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page
 			<div class="post-grid article-grid" data-article-grid>
 				{pageArticles.map((article) => (
 					<ArticleCard
-						title={article.title}
-						date={article.pubDate}
-						description={article.description}
+						title={article.data.title}
+						date={article.data.pubDate}
+						description={article.data.description}
 						slug={article.slug}
 						tags={article.tags}
-						img={article.img}
+						img={article.data.img}
 					/>
 				))}
 			</div>
