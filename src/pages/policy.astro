@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { TEMPLATE_CONFIG } from '../config';
 ---
 
-<Layout title="Privacy Policy | StarterBlog" description="Privacy policy and analytics guidance for the template.">
+<Layout title={`Privacy Policy | ${TEMPLATE_CONFIG.site.title}`} description="Privacy policy and analytics guidance for the template.">
 	<div class="shell">
 		<section class="section">
 			<div class="section-head">

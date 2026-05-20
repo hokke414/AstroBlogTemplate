@@ -1,11 +1,12 @@
 ---
 import '../styles/global.css';
+import { TEMPLATE_CONFIG } from '../config';
 
 const siteIcon = '/favicon.ico';
 
 const {
-	title = 'StarterBlog',
-	description = 'A starter Astro blog template.',
+	title = TEMPLATE_CONFIG.site.title,
+	description = TEMPLATE_CONFIG.site.description,
 } = Astro.props;
 
 const navItems = [
@@ -18,7 +19,7 @@ const navItems = [
 ---
 
 <!doctype html>
-<html lang="ja">
+<html lang={TEMPLATE_CONFIG.site.language}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,10 +32,10 @@ const navItems = [
 	<body>
 		<header class="site-header">
 			<div class="site-header-inner">
-				<a class="site-brand" href="/" aria-label="StarterBlog home">
-					<img src={siteIcon} alt="StarterBlog" class="site-brand-mark" />
+				<a class="site-brand" href="/" aria-label={`${TEMPLATE_CONFIG.site.title} home`}>
+					<img src={siteIcon} alt={TEMPLATE_CONFIG.site.title} class="site-brand-mark" />
 					<span>
-						<strong>StarterBlog</strong>
+						<strong>{TEMPLATE_CONFIG.site.title}</strong>
 						<small>Starter Template</small>
 					</span>
 				</a>
@@ -74,7 +75,7 @@ const navItems = [
 					</div>
 				</div>
 				<div>
-					<p class="site-footer-note">© 2026 StarterBlog</p>
+					<p class="site-footer-note">© 2026 {TEMPLATE_CONFIG.site.title}</p>
 					<p class="site-footer-note">
 						This website is forked from
 						<a href="https://github.com/hokke414/AstroBlogTemplate" target="_blank" rel="noreferrer">this repo</a>.

@@ -1,100 +1,108 @@
-## StarterBlog — Astro template
-
-A lightweight Astro blog starter template, intended to be forked and customized.
-
----
-
-## Prerequisites
-
-- Node.js >= 22.12.0 (required by the lockfile and Astro in this template)
-- Git (for pushing your fork)
-
----
-
-## 導入手順 (Setup)
-
-1. Clone or fork the repository.
-2. Install dependencies and start the dev server:
-
-```bash
-npm install
-npm run dev
-```
-
-3. Build for production:
-
-```bash
-npm run build
-```
-
-4. Preview the production build locally:
-
-```bash
-npm run preview
-```
-
----
-
-## Content Collections & Frontmatter validation
-
-This template uses Astro Content Collections to store and validate articles.
-
-- Schema file: `src/content/config.ts` — contains the Zod schema that validates article frontmatter (title, description, `pubDate` format, optional `author`, optional `tags`, optional `img`).
-- Collection folder: `src/content/articles/` — place your article Markdown files here.
-
-When frontmatter does not match the schema, a validation error will be reported during `astro dev` or `astro build`. This prevents malformed metadata from being published.
-
----
-
-## 記事追加手順 (Add an article)
-
-1. Create a new Markdown file in `src/content/articles/` named with the desired slug, for example `my-first-post.md`.
-2. Add frontmatter at the top matching the schema. Example:
-
-```md
----
-title: "Your article title"
-description: "A short summary for lists and SEO"
-pubDate: 2026-05-11
 author: "Your Name"
 tags:
   - Astro
-  - Tutorial
+  - Blog
 img: src/assets/thumbnail/my-thumb.png
----
+draft: false
+# StarterBlog — Astro テンプレート
 
-Your article content here.
-```
+簡潔な導入手順と差し替え箇所を先頭に配置しています。まずは `src/config.ts` を編集してください。
 
-Notes:
-- `pubDate` must be `YYYY-MM-DD` (validated by the collection schema).
-- `img` is optional — omit it to use the default `src/assets/thumbnail/noimg.png`.
+## Quick Setup
 
-After adding the file, run `npm run dev` to preview locally. If the frontmatter fails validation, the dev server or build will show a clear error explaining which field is invalid.
-
----
-
-## File overview (key files)
-
-- `src/content/config.ts` — Content Collection schema (Zod). Edit to change required fields or validation rules.
-- `src/content/articles/` — Markdown files for articles.
-- `src/layouts/BlogPostLayout.astro` — Renders the article pages.
-- `src/pages/article.astro` and `src/pages/article/page/[page].astro` — Article listing and pagination (now backed by the content collection).
-- `src/utils/articles.ts` — Utilities that read the collection and expose article lists/tags.
-
----
-
-## Publishing checklist
-
-1. Update `src/layouts/Layout.astro` with your site title and links.
-2. Replace `public/favicon.ico` if needed.
-3. Add articles to `src/content/articles/`.
-4. Commit and push. Example:
+1. 依存をインストール:
 
 ```bash
-git add -A
-git commit -m "Prepare StarterBlog template with content collections"
-git push origin main
+npm install
 ```
 
-If you want, I can commit these changes and push to your remote — tell me which branch and remote to use.
+2. `src/config.ts` を開いて必須値を更新:
+
+- `site.title`
+- `site.description`
+- `site.url` — RSS と Sitemap に使います
+- `site.basePath` — GitHub Pages のプロジェクト配下で必要
+
+3. 投稿を `src/content/blog/` に追加します。
+
+4. 開発サーバー起動:
+
+```bash
+npm run dev
+```
+
+5. 本番ビルドとプレビュー:
+
+```bash
+npm run build
+npm run preview
+```
+
+## Replace These (first things to swap)
+
+- サイト名・説明: `src/config.ts`
+- ファビコン: `public/favicon.ico`
+- サンプル記事: `src/content/blog/example.md`
+- テキスト: `src/pages/*.astro` の文言
+
+## Content & Config
+
+- Markdown 配置: `src/content/blog/`
+- スキーマ: `src/content.config.ts` (Zod)
+- 設定のハブ: `src/config.ts`
+
+## Frontmatter 例
+
+```md
+---
+title: "記事タイトル"
+description: "一覧に表示される短い説明"
+pubDate: 2026-05-11
+author: "あなたの名前"
+tags:
+  - Astro
+  - チュートリアル
+img: src/assets/thumbnail/my-thumb.png
+draft: false
+---
+```
+
+- `pubDate` は `YYYY-MM-DD` か Date を許容（内部で正規化します）。
+- `draft: true` の記事は一覧と RSS から除外されます。
+
+## 主要機能
+
+- 記事一覧とページネーション
+- タグフィルタ・キーワード検索
+- RSS (`/rss.xml`) 自動生成
+- Sitemap 自動生成 (`sitemap-index.xml` / `sitemap.xml`)
+- Draft 対応（frontmatter の `draft`）
+
+## デプロイ対応
+
+対応済みホスティング:
+
+- GitHub Pages
+- Vercel
+- Cloudflare Pages
+
+推奨設定例:
+
+- GitHub Pages (project pages): `site.basePath` を `/<repo>` に設定
+- どのプロバイダでもビルドコマンドは `npm run build`、出力は `dist/`
+
+## 追加メモ
+
+- サイト URL を `src/config.ts` に正しく設定すると RSS と Sitemap が正しく生成されます。
+- 変更後は `npm run build` でビルド検証してください。
+
+---
+ファイル一覧（主要）:
+
+- `src/config.ts` — 単一設定ファイル（サイト情報・コンテンツ設定など）
+- `src/content.config.ts` — Content Collection スキーマ
+- `src/content/blog/` — 記事 Markdown
+- `src/layouts/BlogPostLayout.astro` — 個別記事レイアウト
+- `src/pages/rss.xml.ts` — RSS エンドポイント
+
+ご希望なら、これらの変更をコミットしてリモートに push します。どのブランチにしますか？

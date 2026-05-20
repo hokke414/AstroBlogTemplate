@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { TEMPLATE_CONFIG } from '../config';
 ---
 
-<Layout title="About | StarterBlog" description="About this starter template.">
+<Layout title={`About | ${TEMPLATE_CONFIG.site.title}`} description="About this starter template.">
 	<div class="shell">
 		<section class="section">
 			<div class="section-head">

@@ -7,6 +7,7 @@ tags:
   - Astro
   - Tutorial
 img: /noimg.png
+draft: false
 ---
 
 You can write here whatever you thought.

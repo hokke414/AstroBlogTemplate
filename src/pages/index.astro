@@ -1,10 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
+import { TEMPLATE_CONFIG } from '../config';
 import { collectArticles, uniqueTags } from '../utils/articles';
 
 const allArticles = await collectArticles();
-const latestArticles = allArticles.slice(0, 6);
+const latestArticles = allArticles.slice(0, TEMPLATE_CONFIG.content.homeLatestCount);
 
 const articleCount = allArticles.length;
 const tagCount = uniqueTags(allArticles).length;
@@ -37,12 +38,12 @@ const featureCards = [
 ];
 ---
 
-<Layout title="StarterBlog | Knowledge Feed" description="A starter blog template for Astro." >
+<Layout title={`${TEMPLATE_CONFIG.site.title} | Knowledge Feed`} description={TEMPLATE_CONFIG.site.description} >
 	<div class="shell">
 		<section class="hero">
 			<div class="hero-copy">
 				<p class="eyebrow">Home / TECH NOTES</p>
-				<h1>StarterBlog</h1>
+				<h1>{TEMPLATE_CONFIG.site.title}</h1>
 				<p class="lead">A starter template for technical notes and blog posts.</p>
 				<div class="actions">
 					<a class="button primary" href="/article">Article</a>
@@ -53,7 +54,7 @@ const featureCards = [
 			<aside class="hero-card" aria-label="Site overview">
 				<p class="card-kicker">Welcome</p>
 				<p>
-					Welcome to StarterBlog, a simple and customizable blog template built with Astro. This site serves as a foundation for creating your own technical notes or blog posts. Explore our collection of articles, learn about the blog's purpose, and feel free to contact us for any inquiries.
+					Welcome to {TEMPLATE_CONFIG.site.title}, a simple and customizable blog template built with Astro. This site serves as a foundation for creating your own technical notes or blog posts. Explore our collection of articles, learn about the blog's purpose, and feel free to contact us for any inquiries.
 				</p>
 				<div class="stats">
 					<div>

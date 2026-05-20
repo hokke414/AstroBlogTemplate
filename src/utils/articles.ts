@@ -5,6 +5,11 @@ type Frontmatter = {
 	author?: string;
 	tags?: string[];
 	img?: string;
+	draft?: boolean;
+};
+
+type RawFrontmatter = Omit<Frontmatter, 'pubDate'> & {
+	pubDate: string | Date;
 };
 
 export type ArticleRecord = {
@@ -17,23 +22,33 @@ export type ArticleRecord = {
 
 export const collectArticles = async (): Promise<ArticleRecord[]> => {
 	// Load markdown files directly to avoid depending on Astro's getCollection during build
-	const modules = import.meta.glob('../content/articles/*.md', { eager: true }) as Record<
+	const modules = import.meta.glob('../content/blog/**/*.md', { eager: true }) as Record<
 		string,
-		{ frontmatter: Frontmatter }
+		{ frontmatter: RawFrontmatter }
 	>;
 
 	const articles = Object.entries(modules).map(([filePath, mod]) => {
-		const id = filePath.split('/').pop()?.replace('.md', '') ?? filePath;
+		const relativePath = filePath.split('/content/blog/')[1] ?? filePath;
+		const id = relativePath.replace(/\.md$/, '');
+		const normalizedPubDate =
+			mod.frontmatter.pubDate instanceof Date
+				? mod.frontmatter.pubDate.toISOString().slice(0, 10)
+				: mod.frontmatter.pubDate;
 		return {
 			id,
 			slug: id,
-			data: mod.frontmatter,
+			data: {
+				...mod.frontmatter,
+				pubDate: normalizedPubDate,
+			},
 			tags: mod.frontmatter.tags ?? [],
 			filePath,
 		} as ArticleRecord;
 	});
 
-	return articles.sort((left, right) => new Date(right.data.pubDate).getTime() - new Date(left.data.pubDate).getTime());
+	return articles
+		.filter((article) => article.data.draft !== true)
+		.sort((left, right) => new Date(right.data.pubDate).getTime() - new Date(left.data.pubDate).getTime());
 };
 
 export const uniqueTags = (articles: ArticleRecord[]) => {

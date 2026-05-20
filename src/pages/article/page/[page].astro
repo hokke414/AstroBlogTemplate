@@ -1,16 +1,17 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import ArticleCard from '../../../components/ArticleCard.astro';
+import { TEMPLATE_CONFIG } from '../../../config';
 import { collectArticles } from '../../../utils/articles';
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = TEMPLATE_CONFIG.content.pageSize;
 
 const allArticles = await collectArticles();
 const totalPages = Math.max(1, Math.ceil(allArticles.length / PAGE_SIZE));
 
 export async function getStaticPaths() {
 	const allArticles = await collectArticles();
-	const pageSize = 12;
+	const pageSize = TEMPLATE_CONFIG.content.pageSize;
 	const pages = Math.max(1, Math.ceil(allArticles.length / pageSize));
 
 	return Array.from({ length: Math.max(0, pages - 1) }, (_, index) => {
@@ -30,7 +31,7 @@ const articles = allArticles.slice(start, end);
 const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page/${page}`);
 ---
 
-<Layout title={`Article ${currentPage} | StarterBlog`} description="Article list for the starter template.">
+<Layout title={`Article ${currentPage} | ${TEMPLATE_CONFIG.site.title}`} description="Article list for the starter template.">
 	<div class="shell">
 		<section class="section">
 			<div class="section-head split">

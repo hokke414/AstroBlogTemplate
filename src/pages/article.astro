@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
+import { TEMPLATE_CONFIG } from '../config';
 import { collectArticles, uniqueTags } from '../utils/articles';
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = TEMPLATE_CONFIG.content.pageSize;
 
 const articles = await collectArticles();
 
@@ -15,7 +16,7 @@ const tags = uniqueTags(articles);
 const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page/${page}`);
 ---
 
-<Layout title="Article | StarterBlog" description="Article list for StarterBlog template.">
+<Layout title={`Article | ${TEMPLATE_CONFIG.site.title}`} description="Article list for StarterBlog template.">
 	<div class="shell">
 		<section class="section">
 			<div class="section-head">
