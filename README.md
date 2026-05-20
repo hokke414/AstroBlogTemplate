@@ -1,14 +1,126 @@
+# StarterBlog Astro Template
+
+## Quick Setup
+
+1. Install dependencies.
+
+```bash
+npm install
+```
+
+2. Replace template settings in `src/config.ts`.
+
+3. Put your posts in `src/content/blog/`.
+
+4. Start development server.
+
+```bash
+npm run dev
+```
+
+5. Build and preview.
+
+```bash
+npm run build
+npm run preview
+```
+
+## Replace These
+
+Edit `src/config.ts` first:
+
+- `site.title`
+- `site.description`
+- `site.url` (required for RSS and Sitemap)
+- `site.basePath` (`/` for root, `/repo-name` for GitHub Pages project sites)
+
+Also replace:
+
+- `public/favicon.ico`
+- Navigation/content text in `src/pages/*.astro`
+- The sample post in `src/content/blog/example.md`
+
+## Content Location
+
+- Markdown directory: `src/content/blog/`
+- Content schema: `src/content.config.ts`
+- Runtime settings hub: `src/config.ts`
+
+## Frontmatter
+
+Example frontmatter:
+
+```md
+---
+title: "Your article title"
+description: "A short summary"
+pubDate: 2026-05-11
 author: "Your Name"
 tags:
   - Astro
   - Blog
 img: src/assets/thumbnail/my-thumb.png
 draft: false
-# StarterBlog — Astro テンプレート
+---
+```
 
-簡潔な導入手順と差し替え箇所を先頭に配置しています。まずは `src/config.ts` を編集してください。
+Notes:
 
-## Quick Setup
+- `pubDate` must be `YYYY-MM-DD`.
+- `draft: true` posts are excluded from article lists and RSS.
+- `img` is optional.
+
+## Included Features
+
+- Astro blog template with article list and pagination
+- Tag filtering and keyword search on article list page
+- RSS feed at `/rss.xml`
+- Sitemap generation
+- Draft support via frontmatter (`draft: true`)
+
+## Deploy Support
+
+This template supports static hosting and is ready for:
+
+- GitHub Pages
+- Vercel
+- Cloudflare Pages
+
+### GitHub Pages
+
+Recommended settings:
+
+- Set `site.url` to your Pages URL in `src/config.ts`
+- If using project pages, set `basePath` to `/<repo-name>`
+- Build command: `npm run build`
+- Output directory: `dist`
+
+### Vercel
+
+- Framework preset: Astro
+- Build command: `npm run build`
+- Output directory: `dist`
+- Set `site.url` in `src/config.ts` to your production domain
+
+### Cloudflare Pages
+
+- Framework preset: Astro
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Set `site.url` in `src/config.ts` to your production domain
+
+## Scripts
+
+- `npm run dev`: local development
+- `npm run build`: production build
+- `npm run preview`: preview built site locally
+
+
+# StarterBlog テンプレート
+
+以下は主に日本語ユーザー向けの簡潔な導入ガイドです。まず `src/config.ts` を編集してください。
+
+## クイックセットアップ
 
 1. 依存をインストール:
 
@@ -16,93 +128,67 @@ draft: false
 npm install
 ```
 
-2. `src/config.ts` を開いて必須値を更新:
+2. `src/config.ts` を更新（必須）:
 
-- `site.title`
-- `site.description`
-- `site.url` — RSS と Sitemap に使います
-- `site.basePath` — GitHub Pages のプロジェクト配下で必要
+- `site.title`、`site.description`
+- `site.url`（RSS/Sitemap に必須）
+- `site.basePath`（GitHub Pages プロジェクトページなら `/<repo>`）
 
-3. 投稿を `src/content/blog/` に追加します。
+3. 投稿ファイルを `src/content/blog/` に置く
 
-4. 開発サーバー起動:
+4. 開発サーバー:
 
 ```bash
 npm run dev
 ```
 
-5. 本番ビルドとプレビュー:
+5. 本番ビルド:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Replace These (first things to swap)
-
-- サイト名・説明: `src/config.ts`
-- ファビコン: `public/favicon.ico`
-- サンプル記事: `src/content/blog/example.md`
-- テキスト: `src/pages/*.astro` の文言
-
-## Content & Config
-
-- Markdown 配置: `src/content/blog/`
-- スキーマ: `src/content.config.ts` (Zod)
-- 設定のハブ: `src/config.ts`
-
-## Frontmatter 例
+## frontmatter の例
 
 ```md
 ---
 title: "記事タイトル"
-description: "一覧に表示される短い説明"
+description: "一覧に表示する短い説明"
 pubDate: 2026-05-11
 author: "あなたの名前"
 tags:
-  - Astro
-  - チュートリアル
+	- Astro
+	- 技術
 img: src/assets/thumbnail/my-thumb.png
 draft: false
 ---
 ```
 
-- `pubDate` は `YYYY-MM-DD` か Date を許容（内部で正規化します）。
-- `draft: true` の記事は一覧と RSS から除外されます。
+- `draft: true` は一覧・RSS から除外されます。
+- `pubDate` は `YYYY-MM-DD` か Date を許容します。
 
-## 主要機能
+## 主な機能
 
-- 記事一覧とページネーション
-- タグフィルタ・キーワード検索
-- RSS (`/rss.xml`) 自動生成
-- Sitemap 自動生成 (`sitemap-index.xml` / `sitemap.xml`)
-- Draft 対応（frontmatter の `draft`）
+- 記事一覧、ページネーション
+- タグフィルタ・検索
+- RSS を `/rss.xml` に生成
+- Sitemap を自動生成
+- Draft 対応
 
-## デプロイ対応
+## デプロイ先の例
 
-対応済みホスティング:
-
-- GitHub Pages
+- GitHub Pages（プロジェクトページの場合は `site.basePath` を設定）
 - Vercel
 - Cloudflare Pages
 
-推奨設定例:
-
-- GitHub Pages (project pages): `site.basePath` を `/<repo>` に設定
-- どのプロバイダでもビルドコマンドは `npm run build`、出力は `dist/`
-
-## 追加メモ
-
-- サイト URL を `src/config.ts` に正しく設定すると RSS と Sitemap が正しく生成されます。
-- 変更後は `npm run build` でビルド検証してください。
+ビルドコマンド: `npm run build`、出力先: `dist/`
 
 ---
-ファイル一覧（主要）:
+ファイル参照:
 
-- `src/config.ts` — 単一設定ファイル（サイト情報・コンテンツ設定など）
-- `src/content.config.ts` — Content Collection スキーマ
-- `src/content/blog/` — 記事 Markdown
-- `src/layouts/BlogPostLayout.astro` — 個別記事レイアウト
-- `src/pages/rss.xml.ts` — RSS エンドポイント
+- `src/config.ts` — テンプレートの主要設定
+- `src/content/blog/` — Markdown 記事
+- `src/content.config.ts` — フロントマターのスキーマ
 
-ご希望なら、これらの変更をコミットしてリモートに push します。どのブランチにしますか？
+変更をコミットして push しますか？（ブランチ名を教えてください）
