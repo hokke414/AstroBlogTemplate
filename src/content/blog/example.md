@@ -10,4 +10,9 @@ img: /noimg.png
 draft: false
 ---
 
-You can write here whatever you thought.
+# You can write here whatever you thought!
+
+```js
+console.log("Hello World!");
+```
+
