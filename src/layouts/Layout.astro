@@ -1,11 +1,11 @@
 ---
 import '../styles/global.css';
 
-const nexiaryIcon = '/nexiary.png';
+const siteIcon = '/favicon.ico';
 
 const {
-	title = 'Nexiary',
-	description = 'Nexiary は、プログラミング言語や AI、ツールを扱う情報サイトです。',
+	title = 'StarterBlog',
+	description = 'A starter Astro blog template.',
 } = Astro.props;
 
 const navItems = [
@@ -13,7 +13,7 @@ const navItems = [
 	{ href: '/article', label: 'Article' },
 	{ href: '/about', label: 'About' },
 	{ href: '/policy', label: 'Policy' },
-	{ href: 'https://forms.gle/sW5eP28BkmsYY2Xw8', label: 'Contact' },
+	{ href: '/', label: 'Contact' },
 ];
 ---
 
@@ -26,20 +26,20 @@ const navItems = [
 		<meta name="description" content={description} />
 		<meta name="theme-color" content="#0f172a" />
 		<title>{title}</title>
-		<link rel="icon" href={nexiaryIcon} />
+		<link rel="icon" href={siteIcon} />
 	</head>
 	<body>
 		<header class="site-header">
 			<div class="site-header-inner">
-				<a class="site-brand" href="/" aria-label="Nexiary home">
-					<img src={nexiaryIcon} alt="Nexiary" class="site-brand-mark" />
+				<a class="site-brand" href="/" aria-label="StarterBlog home">
+					<img src={siteIcon} alt="StarterBlog" class="site-brand-mark" />
 					<span>
-						<strong>Nexiary</strong>
-						<small>Knowledge Feed</small>
+						<strong>StarterBlog</strong>
+						<small>Starter Template</small>
 					</span>
 				</a>
 
-				<nav class="site-nav" aria-label="主要ナビゲーション">
+				<nav class="site-nav" aria-label="Primary navigation">
 					{navItems.map((item) => (
 						<a
 							href={item.href}
@@ -73,7 +73,13 @@ const navItems = [
 						))}
 					</div>
 				</div>
-				<p class="site-footer-note">© 2026 Nexiary</p>
+				<div>
+					<p class="site-footer-note">© 2026 StarterBlog</p>
+					<p class="site-footer-note">
+						This website is forked from
+						<a href="https://github.com/hokke414/AstroBlogTemplate" target="_blank" rel="noreferrer">this repo</a>.
+					</p>
+				</div>
 			</div>
 		</footer>
 	</body>

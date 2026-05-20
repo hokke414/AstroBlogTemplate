@@ -29,24 +29,24 @@ const tags = uniqueTags(articles);
 const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page/${page}`);
 ---
 
-<Layout title="Article | Nexiary" description="Nexiary の記事一覧。タグ検索とキーワード検索に対応しています。">
+<Layout title="Article | StarterBlog" description="Article list for StarterBlog template.">
 	<div class="shell">
 		<section class="section">
 			<div class="section-head">
 				<p class="eyebrow">All Article</p>
 				<h1>Articles</h1>
 				<p>
-					タグ検索とキーワード検索で目的の記事を探せます。
+					Explore our collection of technical articles and blog posts.
 				</p>
 			</div>
 
 			<div class="search-panel">
 				<div class="search-row">
-					<input class="search-input" type="search" placeholder="キーワードで検索" aria-label="キーワードで検索" data-search-input />
-					<button class="button primary" type="button" data-clear-search>クリア</button>
+					<input class="search-input" type="search" placeholder="Search by keyword" aria-label="Search by keyword" data-search-input />
+					<button class="button primary" type="button" data-clear-search>Clear</button>
 				</div>
 
-				<div class="filter-bar" aria-label="タグ検索">
+				<div class="filter-bar" aria-label="Tag filters">
 					{tags.map((tag) => (
 						<button class="tag-filter" type="button" data-tag={tag} aria-pressed="false">
 							{tag}
@@ -54,7 +54,7 @@ const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page
 					))}
 				</div>
 
-				<p class="results-summary"><span data-result-count>{pageArticles.length}</span>件表示中</p>
+				<p class="results-summary"><span data-result-count>{pageArticles.length}</span> results</p>
 			</div>
 
 			<div class="post-grid article-grid" data-article-grid>
@@ -70,10 +70,10 @@ const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page
 				))}
 			</div>
 
-			<p class="empty-state" data-empty-state hidden>条件に一致する記事がありません。</p>
+			<p class="empty-state" data-empty-state hidden>No articles match your filters.</p>
 
 			{totalPages > 1 && (
-				<nav class="pagination" aria-label="記事一覧ページネーション">
+				<nav class="pagination" aria-label="Article pagination">
 					{Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
 						<a class:list={["page-link", page === currentPage && 'is-current']} href={makePagePath(page)}>
 							{page}

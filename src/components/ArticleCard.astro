@@ -62,7 +62,7 @@ const searchableText = [title, description, ...tags].join(' ');
 		<h3>{title}</h3>
 		<p class="post-excerpt">{description}</p>
 		{tags.length > 0 && (
-			<div class="article-card-tags" aria-label="タグ">
+			<div class="article-card-tags" aria-label="Tags">
 				{tags.map((tag) => <span class="article-tag">{tag}</span>)}
 			</div>
 		)}

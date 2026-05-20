@@ -24,63 +24,61 @@ const tagCount = uniqueTags(allArticles).length;
 const featureCards = [
 	{
 		title: 'Article',
-		description: '記事の一覧ページ。タグ検索とキーワード検索に対応しています。',
+		description: 'Explore our collection of technical articles and blog posts.',
 		href: '/article',
-		label: '開く',
+		label: 'Open',
 	},
 	{
 		title: 'About',
-		description: '運営者情報、更新方針やポリシーをまとめたページ。連絡先もここから確認できます。',
+		description: 'Learn more about the blog and its purpose.',
 		href: '/about',
-		label: '開く',
+		label: 'Open',
 	},
 	{
 			title: 'Contact',
-			description: 'お問い合わせはフォームからご案内します。',
+			description: 'Contact us through our inquiry form.',
 			href: 'https://forms.gle/sW5eP28BkmsYY2Xw8',
-		label: '開く',
+		label: 'Open',
 	},
 	{
 		title: 'Policy',
-		description: 'プライバシーポリシーに関する情報をまとめたページです。',
+		description: 'Privacy policy and disclaimer information.',
 		href: '/policy',
-		label: '開く',
+		label: 'Open',
 	},
 ];
 ---
 
-<Layout title="Nexiary | Knowledge Feed" description="Nexiary は、プログラミング言語や AI、ツールを扱う情報サイトです。">
+<Layout title="StarterBlog | Knowledge Feed" description="A starter blog template for Astro." >
 	<div class="shell">
 		<section class="hero">
 			<div class="hero-copy">
 				<p class="eyebrow">Home / TECH NOTES</p>
-				<h1>Nexiary</h1>
-				<p class="lead">
-					プログラミング言語や AI、ツールを中心に、運営者の備忘録やお知らせをまとめた情報サイトです。
-				</p>
+				<h1>StarterBlog</h1>
+				<p class="lead">A starter template for technical notes and blog posts.</p>
 				<div class="actions">
 					<a class="button primary" href="/article">Article</a>
 					<a class="button ghost" href="/about">About</a>
 				</div>
 			</div>
 
-			<aside class="hero-card" aria-label="サイト概要">
-				<p class="card-kicker">Welcome to Nexiary</p>
+			<aside class="hero-card" aria-label="Site overview">
+				<p class="card-kicker">Welcome</p>
 				<p>
-					記事は Markdown 形式で追加されています。
+					Welcome to StarterBlog, a simple and customizable blog template built with Astro. This site serves as a foundation for creating your own technical notes or blog posts. Explore our collection of articles, learn about the blog's purpose, and feel free to contact us for any inquiries.
 				</p>
 				<div class="stats">
 					<div>
 						<strong>{articleCount}</strong>
-						<span>公開記事</span>
+						<span>Articles</span>
 					</div>
 					<div>
 						<strong>{tagCount}</strong>
-						<span>タグ数</span>
+						<span>Tags</span>
 					</div>
 					<div>
 						<strong>{latestArticles.length}</strong>
-						<span>新着表示</span>
+						<span>Latest Articles</span>
 					</div>
 				</div>
 			</aside>
@@ -90,7 +88,7 @@ const featureCards = [
 			<div class="section-head">
 				<p class="eyebrow">Pages</p>
 				<h2>Visit Our Pages</h2>
-				<p>このページは大きく4つのセクションに分かれているのでご覧ください。</p>
+				<p>Explore the different sections of our site.</p>
 			</div>
 
 			<div class="page-grid">
@@ -110,7 +108,7 @@ const featureCards = [
 					<p class="eyebrow">Latest Posts</p>
 					<h2>Latest Articles</h2>
 				</div>
-				<a class="button ghost" href="/article">もっと見る</a>
+				<a class="button ghost" href="/article">View More</a>
 			</div>
 
 			<div class="post-grid article-grid">

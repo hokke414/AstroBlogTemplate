@@ -66,15 +66,15 @@ const relatedArticles = pickRelatedArticles(collectArticles(articleModules), cur
 
 <Layout title={frontmatter.title} description={frontmatter.description}>
 	<div class="article-container">
-		<a href="/article" class="article-back">← 記事一覧に戻る</a>
+		<a href="/article" class="article-back">← Back to article list</a>
 
 		<article class="article-header">
 			<div class="article-header-main">
 				<div>
 					<div class="article-meta">
-						<span class="category">ブログ</span>
+						<span class="category">Blog</span>
 						<time datetime={frontmatter.pubDate}>{formattedPubDate}</time>
-						<span>著者: {frontmatter.author}</span>
+						<span>Author: {frontmatter.author}</span>
 					</div>
 					<h1 class="article-title">{frontmatter.title}</h1>
 					<p class="article-description">{frontmatter.description}</p>
@@ -91,7 +91,7 @@ const relatedArticles = pickRelatedArticles(collectArticles(articleModules), cur
 			/>
 			{normalizedFrontmatterTags.length > 0 && (
 				<div class="article-tags">
-					<div class="article-tag-list" aria-label="タグ">
+					<div class="article-tag-list" aria-label="Tags">
 						{normalizedFrontmatterTags.map((tag) => <span class="article-tag-pill">{tag}</span>)}
 					</div>
 				</div>
@@ -106,8 +106,8 @@ const relatedArticles = pickRelatedArticles(collectArticles(articleModules), cur
 			<section class="section recommended-section">
 				<div class="section-head">
 					<p class="eyebrow">Recommended</p>
-					<h2>おすすめ記事</h2>
-					<p>いま読んだ記事の近くにある、関連しそうな記事を3件表示しています。</p>
+					<h2>Recommended Articles</h2>
+					<p>Three related articles are shown based on the current post.</p>
 				</div>
 
 				<div class="post-grid recommended-grid">

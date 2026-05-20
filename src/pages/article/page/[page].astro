@@ -45,15 +45,15 @@ const articles = allArticles.slice(start, end);
 const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page/${page}`);
 ---
 
-<Layout title={`Article ${currentPage} | Nexiary`} description="Nexiary の記事一覧ページです。">
+<Layout title={`Article ${currentPage} | StarterBlog`} description="Article list for the starter template.">
 	<div class="shell">
 		<section class="section">
 			<div class="section-head split">
 				<div>
 					<p class="eyebrow">Article</p>
-					<h1>記事一覧</h1>
+					<h1>Article List</h1>
 				</div>
-				<p class="results-summary">{articles.length}件表示中</p>
+				<p class="results-summary">{articles.length} results</p>
 			</div>
 
 			<div class="post-grid article-grid">
@@ -69,7 +69,7 @@ const makePagePath = (page: number) => (page === 1 ? '/article' : `/article/page
 				))}
 			</div>
 
-			<nav class="pagination" aria-label="記事一覧ページネーション">
+			<nav class="pagination" aria-label="Article pagination">
 				{Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
 					<a class:list={["page-link", page === currentPage && 'is-current']} href={makePagePath(page)}>
 						{page}
