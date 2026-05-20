@@ -7,6 +7,7 @@ author: 'hokke414'
 tags:
   - Git
   - GitHub
+img: ../../assets/thumbnail/learn-git-basic.jpg
 ---
 
 大学受験も終わり、ついに個人開発ができる時期が来たと思いきや、バージョン管理? Git? 何それ? という状態で、かなり絶望的だったので、自分なりにGitの使い方をまとめました。

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import favicon from '../assets/hokke.jpeg';
+
+const nexiaryIcon = '/nexiary.png';
 
 const {
 	title = 'Nexiary',
@@ -25,13 +26,13 @@ const navItems = [
 		<meta name="description" content={description} />
 		<meta name="theme-color" content="#0f172a" />
 		<title>{title}</title>
-		<link rel="icon" href={favicon?.src ?? favicon} />
+		<link rel="icon" href={nexiaryIcon} />
 	</head>
 	<body>
 		<header class="site-header">
 			<div class="site-header-inner">
 				<a class="site-brand" href="/" aria-label="Nexiary home">
-					<span class="site-brand-mark">N</span>
+					<img src={nexiaryIcon} alt="Nexiary" class="site-brand-mark" />
 					<span>
 						<strong>Nexiary</strong>
 						<small>Knowledge Feed</small>

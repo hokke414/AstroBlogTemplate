@@ -16,7 +16,7 @@ interface Props {
 
 const { frontmatter } = Astro.props;
 
-const thumbModules = import.meta.glob('../assets/thumbnail/*.{png,jpg,jpeg,webp,avif}', {
+const thumbModules = import.meta.glob('../assets/{thumbnail,stacks}/*.{png,jpg,jpeg,webp,avif}', {
 	eager: true,
 	import: 'default',
 }) as Record<string, any>;
@@ -41,8 +41,8 @@ const resolveThumb = (img: string | undefined) => {
 
 const articleThumb = await getImage({
 	src: resolveThumb(frontmatter.img),
-	width: 680,
-	height: 420,
+	width: 640,
+	height: 360,
 	format: 'webp',
 });
 
@@ -118,6 +118,7 @@ const relatedArticles = pickRelatedArticles(collectArticles(articleModules), cur
 							description={article.description}
 							slug={article.slug}
 							tags={article.tags}
+							img={article.img}
 						/>
 					))}
 				</div>
