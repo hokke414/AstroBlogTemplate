@@ -1,4 +1,3 @@
-```
 # StarterBlog — Astro template
 
 This repository is a lightweight Astro-based blog starter template. It is intended to be forked and customized for publishing posts as Markdown.
