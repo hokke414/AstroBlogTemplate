@@ -1,0 +1,27 @@
+{
+  "name": "starterblog",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A lightweight Astro-based blog starter template",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "keywords": [
+    "astro",
+    "blog",
+    "template",
+    "starter"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "astro": "^6.3.1",
+    "remark-directive": "^4.0.0",
+    "unist-util-visit": "^5.1.0"
+  }
+}
